@@ -1,0 +1,172 @@
+{% load static %}
+<!-- Log on to freeprojectscodes.com for more projects -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
+
+    <!-- font awesome cdn -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" 
+        crossorigin="anonymous">
+
+    <!-- Main CSS, then Sidebar CSS and Dialog Box CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dialogbox.css' %}">
+
+    <title>IMS - {% block title %}Title Missing{% endblock title %}</title>
+
+</head>
+<!-- Log on to freeprojectscodes.com for more projects -->
+
+<body style="background-color: #000">
+        <!-- Dialog Box CSS  -->
+    <div id="dialogoverlay"></div>
+    <div id="dialogbox">
+        <div class="align-middle">
+            <div id="dialogboxhead"></div>
+            <div id="dialogboxbody"></div>
+            <div id="dialogboxfoot"></div>
+        </div>
+    </div>
+
+    <main id="wrapper" style="background-color: #000">
+
+        {% if user.is_authenticated %}
+
+        <nav id="sidebar">
+
+            <div class="sidebar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <h1 class="mainLogo" >Bubbles</h1><h6 class="subLogo">BizTrack</h6>
+                </a>
+            </div>
+
+            <ul class="list-unstyled sidebar-components">
+                <li>
+                    <a class="sidebar-text sidebar-button" href="{% url 'home' %}">
+                        <i class="fas fa-home" id="iconButton"></i> Home</a>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-toggle="collapse"
+                        class="dropdown-toggle sidebar-text right-arrow sidebar-button">
+                        <i class="fas fa-balance-scale" id="iconButton"></i>
+                        Inventory</a>
+                    <ul class="collapse list-unstyled" id="inventorySubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-stock' %}">
+                                <i id="iconButton" class="fas fa-plus"></i> Add New</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'inventory' %}">
+                                <i id="iconButton" class="fas fa-th-list"></i> Inventory List</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-toggle="collapse"
+                        class="dropdown-toggle sidebar-text right-arrow sidebar-button"><i id="iconButton"
+                            class="fas fa-cart-plus"></i> Purchases</a>
+                    <ul class="collapse list-unstyled" id="purchaseSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'select-supplier' %}">
+                                <i id="iconButton" class="fas fa-plus"></i> New Purchases</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'purchases-list' %}"><i
+                                    id="iconButton" class="fas fa-th-list"></i> Purchases List</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#saleSubmenu" data-toggle="collapse"
+                        class="dropdown-toggle sidebar-text right-arrow sidebar-button"><i
+                            class="fas fa-cart-arrow-down" id="iconButton"></i> Sales</a>
+                    <ul class="collapse list-unstyled" id="saleSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-sale' %}"><i
+                                    id="iconButton" class="fas fa-plus"></i> New Sales</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'sales-list' %}"><i
+                                    id="iconButton" class="fas fa-th-list"></i> Sales Details</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#supplierSubmenu" data-toggle="collapse"
+                        class="dropdown-toggle sidebar-text right-arrow sidebar-button"><i id="iconButton"
+                            class="fas fa-dolly-flatbed"></i> Suppliers</a>
+                    <ul class="collapse list-unstyled" id="supplierSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-supplier' %}"><i
+                                    id="iconButton" class="fas fa-plus"></i> Add New Supplier</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'suppliers-list' %}"><i
+                                    id="iconButton" class="fas fa-th-list"></i> Suppliers List</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    
+
+                <li class="bottomleft_d">
+                    <a href="#UserSubmenu" data-toggle="collapse"
+                        class="dropdown-toggle sidebar-text right-arrow sidebar-button"><i id="iconButton"
+                            class="fas fa-user-circle"></i> Profile</a>
+                    <ul class="collapse list-unstyled" id="UserSubmenu">
+                        {% if request.user.is_superuser %}
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'admin:index' %}"><i
+                                    id="iconButton" class="fas fa-lock"></i> Admin Page</a> </li>
+                        {% endif %}
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}"><i
+                                    id="iconButton" class="fas fa-user-times"></i> Logout</a> </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a class="sidebar-text sidebar-button" href="{% url 'about' %}"><i id="iconButton"
+                            class="fas fa-info-circle"></i>
+                        About</a>
+                </li>
+
+            </ul>
+            {% comment %}
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="sidebar-button nav-button">Button</a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-text">Link</a>
+                </li>
+            </ul>
+            {% endcomment %}
+
+        </nav>
+
+        <div id="content" style="background-color: black;">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}"> {{ message }} </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    {% endif %}
+
+                    <div class="container">
+                        {% block content %}{% endblock content %}
+                    </div>
+
+                </div>
+            </div>
+            <br>
+
+        </div>
+
+    </main>
+    <!-- Log on to freeprojectscodes.com for more projects -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'bootstrap/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>
